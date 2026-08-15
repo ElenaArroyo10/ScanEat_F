@@ -1,19 +1,64 @@
 import { useState } from "react";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
 import { Link } from "@tanstack/react-router";
+import { register as registerUser } from "../../services/authService";
 
 function RegisterForm() {
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-	const [role, setRole] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const [roleId, setRoleId] = useState<number | "">("");
+	const [authorizationCode, setAuthorizationCode] = useState("");
+	const [error, setError] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+		setError("");
+
+		if (!firstName.trim() || !lastName.trim() || !email.trim() || !password || !roleId || !authorizationCode.trim()) {
+			setError("Completa todos los campos requeridos, incluido el tipo de empleado.");
+			return;
+		}
+
+		if (password !== confirmPassword) {
+			setError("Las contraseñas no coinciden.");
+			return;
+		}
+
+		setIsSubmitting(true);
+
+		try {
+			await registerUser(
+				firstName.trim(),
+				lastName.trim(),
+				email.trim(),
+				password,
+				authorizationCode.trim(),
+				roleId
+			);
+		} catch (err) {
+			const message =
+				err && typeof err === "object" && "message" in err
+					? String((err as { message?: string }).message)
+					: "No se pudo completar el registro.";
+			setError(message);
+			return;
+		} finally {
+			setIsSubmitting(false);
+		}
+	}
 
 	return (
 		<main className="min-h-screen bg-white">
 			<div className="h-20 bg-brand-mint" />
 
 			<section className="-mt-10 min-h-[calc(100vh-11rem)] rounded-t-[40px] bg-white px-6 py-10">
-				<form className="mx-auto flex w-full max-w-sm flex-col gap-5">
-
+				<form onSubmit={handleSubmit} className="mx-auto flex w-full max-w-sm flex-col gap-5">
 					<h1 className="text-center text-2xl font-bold text-brand-mint-dark">
 						Crear cuenta
 					</h1>
@@ -22,6 +67,8 @@ function RegisterForm() {
 						id="firstName"
 						type="text"
 						placeholder="Nombre"
+						value={firstName}
+						onChange={(event) => setFirstName(event.target.value)}
 						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-brand-brown focus:outline-none"
 					/>
 
@@ -29,6 +76,8 @@ function RegisterForm() {
 						id="lastName"
 						type="text"
 						placeholder="Apellido"
+						value={lastName}
+						onChange={(event) => setLastName(event.target.value)}
 						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-brand-brown focus:outline-none"
 					/>
 
@@ -36,6 +85,8 @@ function RegisterForm() {
 						id="email"
 						type="email"
 						placeholder="Correo electrónico"
+						value={email}
+						onChange={(event) => setEmail(event.target.value)}
 						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-brand-brown focus:outline-none"
 					/>
 
@@ -44,6 +95,8 @@ function RegisterForm() {
 							id="password"
 							type={showPassword ? "text" : "password"}
 							placeholder="Contraseña"
+							value={password}
+							onChange={(event) => setPassword(event.target.value)}
 							className="w-full rounded-lg border border-border px-4 py-3 pr-12 focus:border-2 focus:border-brand-brown focus:outline-none"
 						/>
 
@@ -51,11 +104,7 @@ function RegisterForm() {
 							type="button"
 							onClick={() => setShowPassword(!showPassword)}
 							className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-brand-mint-dark"
-							aria-label={
-								showPassword
-									? "Ocultar contraseña"
-									: "Mostrar contraseña"
-							}
+							aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
 						>
 							{showPassword ? <ImEye /> : <ImEyeBlocked />}
 						</button>
@@ -66,20 +115,16 @@ function RegisterForm() {
 							id="confirmPassword"
 							type={showConfirmPassword ? "text" : "password"}
 							placeholder="Confirmar contraseña"
+							value={confirmPassword}
+							onChange={(event) => setConfirmPassword(event.target.value)}
 							className="w-full rounded-lg border border-border px-4 py-3 pr-12 focus:border-2 focus:border-brand-brown focus:outline-none"
 						/>
 
 						<button
 							type="button"
-							onClick={() =>
-								setShowConfirmPassword(!showConfirmPassword)
-							}
+							onClick={() => setShowConfirmPassword(!showConfirmPassword)}
 							className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-brand-mint-dark"
-							aria-label={
-								showConfirmPassword
-									? "Ocultar contraseña"
-									: "Mostrar contraseña"
-							}
+							aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
 						>
 							{showConfirmPassword ? <ImEye /> : <ImEyeBlocked />}
 						</button>
@@ -87,48 +132,42 @@ function RegisterForm() {
 
 					<select
 						id="role"
-						value={role}
-						onChange={(event) => setRole(event.target.value)}
+						value={roleId}
+						onChange={(event) => setRoleId(Number(event.target.value))}
 						className="w-full cursor-pointer rounded-lg border border-border bg-white px-4 py-3 text-text-primary focus:border-2 focus:border-brand-brown focus:outline-none"
 					>
 						<option value="" disabled>
 							Tipo de empleado
 						</option>
-
-						<option value="waiter">
-							Mesero
-						</option>
-
-						<option value="cook">
-							Cocinero
-						</option>
-
-						<option value="owner">
-							Propietario
-						</option>
+						<option value={1}>Propietario</option>
+						<option value={2}>Cocinero</option>
+						<option value={3}>Mesero</option>
 					</select>
 
 					<input
 						id="authorizationCode"
 						type="text"
 						placeholder="Código de autorización"
+						value={authorizationCode}
+						onChange={(event) => setAuthorizationCode(event.target.value)}
 						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-brand-brown focus:outline-none"
 					/>
 
+					{error ? <p className="text-sm text-red-600">{error}</p> : null}
+
 					<button
 						type="submit"
-						className="w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-white"
+						disabled={isSubmitting}
+						className="w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-white disabled:cursor-not-allowed disabled:opacity-70"
 					>
-						Crear cuenta
+						{isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
 					</button>
 
 					<p className="text-center text-text-primary">
 						¿Ya tienes una cuenta?{" "}
-                        <Link
-                            to="/login"
-                            className="text-brand-mint-dark hover:underline">
-                            Inicia sesión
-                        </Link>
+						<Link to="/login" className="text-brand-mint-dark hover:underline">
+							Inicia sesión
+						</Link>
 					</p>
 				</form>
 			</section>
