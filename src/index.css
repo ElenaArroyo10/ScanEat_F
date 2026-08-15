@@ -1,1 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
 @import "tailwindcss";
+
+@theme {
+
+	/* Brand colors */
+	--color-brand-mint: #90D8CA;
+    --color-brand-mint-dark: #61AD9E;
+	--color-brand-brown: #7F563B;
+	--color-brand-beige: #E8CEA3;
+
+	/* Neutral colors */
+    --color-white: #ffffff;
+	--color-text-primary: #575757;
+	--color-border: #CDCDCD;
+	--color-background: #EDEDED;
+}
+
+@layer base {
+	body {
+		font-family: "Lato", sans-serif;
+		font-style: normal;
+	}
+
+	h1,
+	h2,
+	h3,
+	p {
+		margin: 0;
+	}
+}
