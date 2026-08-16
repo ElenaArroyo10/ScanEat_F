@@ -17,6 +17,7 @@ import { Route as PasswordSuccessRouteImport } from './routes/passwordSuccess'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/resetPassword'
 import { Route as UnexpectedIssueRouteImport } from './routes/unexpectedIssue'
+import { Route as UnexpectedIssueVRouteImport } from './routes/unexpectedIssueV'
 import { Route as VerificationCodeRouteImport } from './routes/verificationCode'
 
 const AccountSuccessRoute = AccountSuccessRouteImport.update({
@@ -59,6 +60,11 @@ const UnexpectedIssueRoute = UnexpectedIssueRouteImport.update({
   path: '/unexpectedIssue',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UnexpectedIssueVRoute = UnexpectedIssueVRouteImport.update({
+  id: '/unexpectedIssueV',
+  path: '/unexpectedIssueV',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VerificationCodeRoute = VerificationCodeRouteImport.update({
   id: '/verificationCode',
   path: '/verificationCode',
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/resetPassword': typeof ResetPasswordRoute
   '/unexpectedIssue': typeof UnexpectedIssueRoute
+  '/unexpectedIssueV': typeof UnexpectedIssueVRoute
   '/verificationCode': typeof VerificationCodeRoute
 }
 export interface FileRoutesByTo {
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/resetPassword': typeof ResetPasswordRoute
   '/unexpectedIssue': typeof UnexpectedIssueRoute
+  '/unexpectedIssueV': typeof UnexpectedIssueVRoute
   '/verificationCode': typeof VerificationCodeRoute
 }
 export interface FileRoutesById {
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/resetPassword': typeof ResetPasswordRoute
   '/unexpectedIssue': typeof UnexpectedIssueRoute
+  '/unexpectedIssueV': typeof UnexpectedIssueVRoute
   '/verificationCode': typeof VerificationCodeRoute
 }
 export interface FileRouteTypes {
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/resetPassword'
     | '/unexpectedIssue'
+    | '/unexpectedIssueV'
     | '/verificationCode'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/resetPassword'
     | '/unexpectedIssue'
+    | '/unexpectedIssueV'
     | '/verificationCode'
   id:
     | '__root__'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/resetPassword'
     | '/unexpectedIssue'
+    | '/unexpectedIssueV'
     | '/verificationCode'
   fileRoutesById: FileRoutesById
 }
@@ -144,6 +156,7 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   UnexpectedIssueRoute: typeof UnexpectedIssueRoute
+  UnexpectedIssueVRoute: typeof UnexpectedIssueVRoute
   VerificationCodeRoute: typeof VerificationCodeRoute
 }
 
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnexpectedIssueRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/unexpectedIssueV': {
+      id: '/unexpectedIssueV'
+      path: '/unexpectedIssueV'
+      fullPath: '/unexpectedIssueV'
+      preLoaderRoute: typeof UnexpectedIssueVRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/verificationCode': {
       id: '/verificationCode'
       path: '/verificationCode'
@@ -224,6 +244,7 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   UnexpectedIssueRoute: UnexpectedIssueRoute,
+  UnexpectedIssueVRoute: UnexpectedIssueVRoute,
   VerificationCodeRoute: VerificationCodeRoute,
 }
 export const routeTree = rootRouteImport
