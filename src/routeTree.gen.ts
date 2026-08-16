@@ -9,12 +9,39 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AccountSuccessRouteImport } from './routes/accountSuccess'
+import { Route as AccountVerificationRouteImport } from './routes/accountVerification'
+import { Route as ForgotPasswordRouteImport } from './routes/forgotPassword'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as PasswordSuccessRouteImport } from './routes/passwordSuccess'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ResetPasswordRouteImport } from './routes/resetPassword'
+import { Route as UnexpectedIssueRouteImport } from './routes/unexpectedIssue'
+import { Route as VerificationCodeRouteImport } from './routes/verificationCode'
 
+const AccountSuccessRoute = AccountSuccessRouteImport.update({
+  id: '/accountSuccess',
+  path: '/accountSuccess',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountVerificationRoute = AccountVerificationRouteImport.update({
+  id: '/accountVerification',
+  path: '/accountVerification',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgotPassword',
+  path: '/forgotPassword',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PasswordSuccessRoute = PasswordSuccessRouteImport.update({
+  id: '/passwordSuccess',
+  path: '/passwordSuccess',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -22,40 +49,139 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/resetPassword',
+  path: '/resetPassword',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnexpectedIssueRoute = UnexpectedIssueRouteImport.update({
+  id: '/unexpectedIssue',
+  path: '/unexpectedIssue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerificationCodeRoute = VerificationCodeRouteImport.update({
+  id: '/verificationCode',
+  path: '/verificationCode',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/accountSuccess': typeof AccountSuccessRoute
+  '/accountVerification': typeof AccountVerificationRoute
+  '/forgotPassword': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/passwordSuccess': typeof PasswordSuccessRoute
   '/register': typeof RegisterRoute
+  '/resetPassword': typeof ResetPasswordRoute
+  '/unexpectedIssue': typeof UnexpectedIssueRoute
+  '/verificationCode': typeof VerificationCodeRoute
 }
 export interface FileRoutesByTo {
+  '/accountSuccess': typeof AccountSuccessRoute
+  '/accountVerification': typeof AccountVerificationRoute
+  '/forgotPassword': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/passwordSuccess': typeof PasswordSuccessRoute
   '/register': typeof RegisterRoute
+  '/resetPassword': typeof ResetPasswordRoute
+  '/unexpectedIssue': typeof UnexpectedIssueRoute
+  '/verificationCode': typeof VerificationCodeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/accountSuccess': typeof AccountSuccessRoute
+  '/accountVerification': typeof AccountVerificationRoute
+  '/forgotPassword': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/passwordSuccess': typeof PasswordSuccessRoute
   '/register': typeof RegisterRoute
+  '/resetPassword': typeof ResetPasswordRoute
+  '/unexpectedIssue': typeof UnexpectedIssueRoute
+  '/verificationCode': typeof VerificationCodeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login' | '/register'
+  fullPaths:
+    | '/accountSuccess'
+    | '/accountVerification'
+    | '/forgotPassword'
+    | '/login'
+    | '/passwordSuccess'
+    | '/register'
+    | '/resetPassword'
+    | '/unexpectedIssue'
+    | '/verificationCode'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/register'
-  id: '__root__' | '/login' | '/register'
+  to:
+    | '/accountSuccess'
+    | '/accountVerification'
+    | '/forgotPassword'
+    | '/login'
+    | '/passwordSuccess'
+    | '/register'
+    | '/resetPassword'
+    | '/unexpectedIssue'
+    | '/verificationCode'
+  id:
+    | '__root__'
+    | '/accountSuccess'
+    | '/accountVerification'
+    | '/forgotPassword'
+    | '/login'
+    | '/passwordSuccess'
+    | '/register'
+    | '/resetPassword'
+    | '/unexpectedIssue'
+    | '/verificationCode'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  AccountSuccessRoute: typeof AccountSuccessRoute
+  AccountVerificationRoute: typeof AccountVerificationRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
+  PasswordSuccessRoute: typeof PasswordSuccessRoute
   RegisterRoute: typeof RegisterRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  UnexpectedIssueRoute: typeof UnexpectedIssueRoute
+  VerificationCodeRoute: typeof VerificationCodeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/accountSuccess': {
+      id: '/accountSuccess'
+      path: '/accountSuccess'
+      fullPath: '/accountSuccess'
+      preLoaderRoute: typeof AccountSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accountVerification': {
+      id: '/accountVerification'
+      path: '/accountVerification'
+      fullPath: '/accountVerification'
+      preLoaderRoute: typeof AccountVerificationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgotPassword': {
+      id: '/forgotPassword'
+      path: '/forgotPassword'
+      fullPath: '/forgotPassword'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/passwordSuccess': {
+      id: '/passwordSuccess'
+      path: '/passwordSuccess'
+      fullPath: '/passwordSuccess'
+      preLoaderRoute: typeof PasswordSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -65,12 +191,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resetPassword': {
+      id: '/resetPassword'
+      path: '/resetPassword'
+      fullPath: '/resetPassword'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unexpectedIssue': {
+      id: '/unexpectedIssue'
+      path: '/unexpectedIssue'
+      fullPath: '/unexpectedIssue'
+      preLoaderRoute: typeof UnexpectedIssueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verificationCode': {
+      id: '/verificationCode'
+      path: '/verificationCode'
+      fullPath: '/verificationCode'
+      preLoaderRoute: typeof VerificationCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  AccountSuccessRoute: AccountSuccessRoute,
+  AccountVerificationRoute: AccountVerificationRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
+  PasswordSuccessRoute: PasswordSuccessRoute,
   RegisterRoute: RegisterRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  UnexpectedIssueRoute: UnexpectedIssueRoute,
+  VerificationCodeRoute: VerificationCodeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

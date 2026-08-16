@@ -5,37 +5,36 @@ import { FaFacebook } from "react-icons/fa";
 import { Link } from "@tanstack/react-router";
 
 function LoginForm() {
-    const [showPassword, setShowPassword] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+	const [showPassword, setShowPassword] = useState(false);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
-    function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
-	event.preventDefault();
+	function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+		event.preventDefault();
 
-	console.log(email);
-	console.log(password);
-}
+		console.log(email);
+		console.log(password);
+	}
 
 	return (
 		<main className="min-h-screen bg-white">
 			<div className="h-48 bg-brand-mint" />
 
 			<section className="-mt-10 min-h-[calc(100vh-11rem)] rounded-t-[40px] bg-white px-6 py-10">
-                <form
-                    onSubmit={handleSubmit}
-                    className="mx-auto flex w-full max-w-sm flex-col gap-5"
-                    
-                >
-					<h1 className="text-center text-2xl font-bold text-brand-mint-dark">
+				<form
+					onSubmit={handleSubmit}
+					className="mx-auto flex w-full max-w-sm flex-col gap-5"
+				>
+					<h1 className="text-center font-bold text-brand-mint-dark">
 						¡Bienvenido de nuevo!
 					</h1>
 
 					<input
 						id="email"
 						type="email"
-                        placeholder="Correo electrónico"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
+						placeholder="Correo electrónico"
+						value={email}
+						onChange={(event) => setEmail(event.target.value)}
 						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-brand-brown focus:outline-none"
 					/>
 
@@ -44,9 +43,9 @@ function LoginForm() {
 							<input
 								id="password"
 								type={showPassword ? "text" : "password"}
-                                placeholder="Contraseña"
-                                value={password}
-                                onChange={(event) => setPassword(event.target.value)}
+								placeholder="Contraseña"
+								value={password}
+								onChange={(event) => setPassword(event.target.value)}
 								className="w-full rounded-lg border border-border px-4 py-3 pr-12 focus:border-2 focus:border-brand-brown focus:outline-none"
 							/>
 
@@ -64,17 +63,17 @@ function LoginForm() {
 							</button>
 						</div>
 
-						<button
-							type="button"
-							className="mb-2 cursor-pointer hover:underline self-end text-sm text-text-primary"
+						<Link
+							to="/forgotPassword"
+							className="mb-2 cursor-pointer self-end text-sm text-text-primary hover:underline"
 						>
 							¿Olvidaste tu contraseña?
-						</button>
+						</Link>
 					</div>
 
 					<button
 						type="submit"
-						className="cursor-pointer w-full rounded-lg bg-brand-mint-dark px-4 py-3 text-white"
+						className="w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-white"
 					>
 						Iniciar sesión
 					</button>
@@ -83,7 +82,7 @@ function LoginForm() {
 						o continuar con
 					</h3>
 
-					<div className="flex justify-center gap-15 mb-5">
+					<div className="mb-5 flex justify-center gap-15">
 						<button
 							type="button"
 							aria-label="Iniciar sesión con Google"
@@ -103,11 +102,12 @@ function LoginForm() {
 
 					<h3 className="text-center text-text-primary">
 						¿No tienes una cuenta?{" "}
-                        <Link
-                            to="/register"
-                            className="text-brand-mint-dark hover:underline">
-                            Regístrate aquí
-                        </Link>
+						<Link
+							to="/register"
+							className="text-brand-mint-dark hover:underline"
+						>
+							Regístrate aquí
+						</Link>
 					</h3>
 				</form>
 			</section>

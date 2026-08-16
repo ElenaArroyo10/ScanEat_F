@@ -18,9 +18,23 @@
 }
 
 @layer base {
+	html {
+		font-size: 15px;
+	}
+
 	body {
 		font-family: "Lato", sans-serif;
+		font-optical-sizing: auto;
 		font-style: normal;
+	}
+
+	h1 {
+		font-size: 28px;
+	}
+
+    h3,
+	p {
+		font-size: 16px;
 	}
 
 	h1,
