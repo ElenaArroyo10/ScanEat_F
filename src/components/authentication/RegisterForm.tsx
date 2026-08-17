@@ -34,7 +34,11 @@ function RegisterForm() {
 			);
 			return;
 		}
-
+		if (password.length < 8) {
+			setError("La contraseña debe tener al menos 8 caracteres.");
+			return;
+		}
+		
 		if (password !== confirmPassword) {
 			setError("Las contraseñas no coinciden.");
 			return;
@@ -221,7 +225,7 @@ function RegisterForm() {
 						className="w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-white disabled:cursor-not-allowed disabled:opacity-70"
 					>
 						{isSubmitting
-							? "Registrando..."
+							? "Enviando código..."
 							: "Siguiente"}
 					</button>
 
