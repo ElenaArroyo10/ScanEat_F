@@ -86,4 +86,91 @@ export const resendVerificationCode = async (email: string) => {
     return data as { message: string; verificationCode?: string };
 };
 
-//Aqui agregas la función para iniciar sesión
+// función para iniciar sesión
+export const login = async (email: string, password: string) => {
+    const response = await fetch(`${AUTH_BASE_URL}/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw data as ApiError;
+    }
+
+    return data as {
+        message: string;
+        requiresTwoFactor?: boolean;
+        token?: string;
+        user?: Record<string, unknown>;
+    };
+};
+
+//Función para verificar el código de inicio de sesión
+export const verifyLoginCode = async (email: string, code: string) => {
+    const response = await fetch(`${AUTH_BASE_URL}/verify-login-code`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, code }),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw data as ApiError;
+    }
+
+    return data as {
+        message: string;
+        token?: string;
+        user?: Record<string, unknown>;
+    };
+};
+
+//Función para iniciar recuperación de contraseña
+export const forgotPassword = async (email: string) => {
+    const response = await fetch(`${AUTH_BASE_URL}/forgot-password`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw data as ApiError;
+    }
+
+    return data as { message: string };
+};
+
+//Función para resetear la contraseña del usuario
+export const resetPassword = async (
+    email: string,
+    code: string,
+    newPassword: string,
+) => {
+    const response = await fetch(`${AUTH_BASE_URL}/reset-password`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, code, newPassword }),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw data as ApiError;
+    }
+
+    return data as { message: string };
+};

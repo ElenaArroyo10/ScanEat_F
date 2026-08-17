@@ -1,9 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { verifyLoginCode } from "../../services/authService";
 
 function VerificationCodeForm() {
+	const navigate = useNavigate();
 	const [code, setCode] = useState(["", "", "", "", "", ""]);
+	const [email, setEmail] = useState("");
+	const [error, setError] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [verificationFlow, setVerificationFlow] = useState("reset");
+
+	useEffect(() => {
+		const flow = localStorage.getItem("verificationFlow");
+		const loginEmail = localStorage.getItem("pendingLoginEmail");
+		const resetEmail = localStorage.getItem("pendingResetEmail");
+
+		if (flow === "login") {
+			setVerificationFlow("login");
+			setEmail(loginEmail ?? "");
+			return;
+		}
+
+		setVerificationFlow("reset");
+		setEmail(resetEmail ?? "");
+	}, []);
 
 	function handleChange(index: number, value: string) {
 		// Solo permite un dígito
@@ -13,6 +34,7 @@ function VerificationCodeForm() {
 		newCode[index] = digit;
 
 		setCode(newCode);
+		setError("");
 
 		// Pasar automáticamente al siguiente input
 		if (digit && index < 5) {
@@ -31,12 +53,56 @@ function VerificationCodeForm() {
 		}
 	}
 
-	function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+	async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
 
 		const verificationCode = code.join("");
 
-		console.log("Código ingresado:", verificationCode);
+		if (verificationCode.length !== 6) {
+			setError("Ingresa los 6 dígitos del código.");
+			return;
+		}
+
+		if (verificationFlow === "login") {
+			if (!email) {
+				setError("No se encontró el correo para verificar el inicio de sesión.");
+				return;
+			}
+
+			setIsSubmitting(true);
+
+			try {
+				const response = await verifyLoginCode(email, verificationCode);
+
+				if (response.token) {
+					localStorage.setItem("authToken", response.token);
+				}
+
+				if (response.user) {
+					localStorage.setItem("authUser", JSON.stringify(response.user));
+				}
+
+				localStorage.removeItem("pendingLoginEmail");
+				localStorage.removeItem("verificationFlow");
+				navigate({ to: "/accountSuccess" });
+			} catch (err) {
+				const message =
+					err &&
+					typeof err === "object" &&
+					"message" in err
+						? String((err as { message?: string }).message)
+						: "No se pudo verificar el código.";
+
+				setError(message);
+			} finally {
+				setIsSubmitting(false);
+			}
+
+			return;
+		}
+
+		localStorage.setItem("pendingResetCode", verificationCode);
+		navigate({ to: "/resetPassword" });
 	}
 
 	return (
@@ -55,7 +121,7 @@ function VerificationCodeForm() {
 						<p className="text-center text-text-primary">
 							Hemos enviado un código de 6 dígitos a{" "}
 							<span className="text-brand-mint-dark">
-								correo@gmail.com
+								{email || "tu correo"}
 							</span>
 						</p>
 					</div>
@@ -82,17 +148,26 @@ function VerificationCodeForm() {
 						))}
 					</div>
 
-					<Link
-						to="/resetPassword"
-						className="text-center mt-14 w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-white"
+					{error ? (
+						<p className="mt-4 text-center text-sm text-red-600">{error}</p>
+					) : null}
+
+					<button
+						type="submit"
+						disabled={isSubmitting}
+						className="mt-14 w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-center text-white disabled:cursor-not-allowed disabled:opacity-70"
 					>
-						Verificar
-					</Link>
+						{isSubmitting ? "Verificando..." : "Verificar"}
+					</button>
 
 					<Link
-						to="/forgotPassword"
+						to={verificationFlow === "login" ? "/login" : "/forgotPassword"}
 						className="mx-auto mt-14 cursor-pointer text-brand-mint"
-						aria-label="Volver a recuperar contraseña"
+						aria-label={
+							verificationFlow === "login"
+								? "Volver al inicio de sesión"
+								: "Volver a recuperar contraseña"
+						}
 					>
 						<BsFillArrowLeftCircleFill className="h-10 w-10" />
 					</Link>
