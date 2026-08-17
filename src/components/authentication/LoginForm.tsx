@@ -123,28 +123,7 @@ function LoginForm() {
 					>
 						{isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
 					</button>
-
-					<h3 className="mt-5 text-center text-text-primary">
-						o continuar con
-					</h3>
-
-					<div className="mb-5 flex justify-center gap-15">
-						<button
-							type="button"
-							aria-label="Iniciar sesión con Google"
-							className="cursor-pointer"
-						>
-							<FcGoogle className="h-10 w-10" />
-						</button>
-
-						<button
-							type="button"
-							aria-label="Iniciar sesión con Facebook"
-							className="cursor-pointer"
-						>
-							<FaFacebook className="h-10 w-10 text-[#1877F2]" />
-						</button>
-					</div>
+					
 
 					<h3 className="text-center text-text-primary">
 						¿No tienes una cuenta?{" "}
