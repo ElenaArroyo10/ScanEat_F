@@ -1,17 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { resetPassword } from "../../services/authService";
 
 function ResetPasswordForm() {
+	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState(false);
 	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState("");
+	const [code, setCode] = useState("");
+	const [error, setError] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+	useEffect(() => {
+		const storedEmail = localStorage.getItem("pendingResetEmail");
+		const storedCode = localStorage.getItem("pendingResetCode");
+
+		setEmail(storedEmail ?? "");
+		setCode(storedCode ?? "");
+	}, []);
+
+	async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
+		setError("");
 
-		console.log("Nueva contraseña:", password);
+		if (!password.trim()) {
+			setError("Ingresa una nueva contraseña.");
+			return;
+		}
+
+		if (!email || !code) {
+			setError("No se encontró el correo o código de recuperación.");
+			return;
+		}
+
+		setIsSubmitting(true);
+
+		try {
+			await resetPassword(email, code, password);
+			localStorage.removeItem("pendingResetEmail");
+			localStorage.removeItem("pendingResetCode");
+			localStorage.removeItem("verificationFlow");
+			navigate({ to: "/passwordSuccess" });
+		} catch (err) {
+			const message =
+				err &&
+				typeof err === "object" &&
+				"message" in err
+					? String((err as { message?: string }).message)
+					: "No se pudo cambiar la contraseña.";
+
+			setError(message);
+		} finally {
+			setIsSubmitting(false);
+		}
 	}
 
 	return (
@@ -84,13 +128,15 @@ function ResetPasswordForm() {
 						</div>
 					</div>
 
+					{error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
 
-                    <Link
-						to="/passwordSuccess"
-						className="mt-14 w-full cursor-pointer whitespace-nowrap rounded-lg bg-brand-mint-dark px-4 py-3 text-center text-white"
+					<button
+						type="submit"
+						disabled={isSubmitting}
+						className="mt-14 w-full cursor-pointer whitespace-nowrap rounded-lg bg-brand-mint-dark px-4 py-3 text-center text-white disabled:cursor-not-allowed disabled:opacity-70"
 					>
-						Cambiar contraseña
-					</Link>
+						{isSubmitting ? "Cambiando..." : "Cambiar contraseña"}
+					</button>
 
 
                     <Link

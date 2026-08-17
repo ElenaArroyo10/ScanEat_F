@@ -51,7 +51,9 @@ function RegisterForm() {
 				authorizationCode.trim(),
 				roleId,
             );
-            navigate({ to: "/accountVerification", search:{email:email.trim(),}, });
+
+            localStorage.setItem("pendingVerificationEmail", email.trim().toLowerCase());
+            navigate({ to: "/accountVerification" });
 		} catch (err) {
 			const message =
 				err &&
