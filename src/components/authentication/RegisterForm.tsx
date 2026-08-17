@@ -51,7 +51,7 @@ function RegisterForm() {
 				authorizationCode.trim(),
 				roleId,
             );
-            navigate({ to: "/accountVerification" });
+            navigate({ to: "/accountVerification", search:{email:email.trim(),}, });
 		} catch (err) {
 			const message =
 				err &&

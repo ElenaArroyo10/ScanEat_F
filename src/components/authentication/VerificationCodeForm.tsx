@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { Link } from "@tanstack/react-router";
-
+import { useSearch } from "@tanstack/react-router";
 function VerificationCodeForm() {
 	const [code, setCode] = useState(["", "", "", "", "", ""]);
+const {email}=useSearch({from:"/accountVerification",});
 
 	function handleChange(index: number, value: string) {
 		// Solo permite un dígito
@@ -55,7 +56,7 @@ function VerificationCodeForm() {
 						<p className="text-center text-text-primary">
 							Hemos enviado un código de 6 dígitos a{" "}
 							<span className="text-brand-mint-dark">
-								correo@gmail.com
+								{email}
 							</span>
 						</p>
 					</div>
