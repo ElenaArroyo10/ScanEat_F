@@ -91,7 +91,7 @@ function RegisterForm() {
 						onChange={(event) =>
 							setFirstName(event.target.value)
 						}
-						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-brand-brown focus:outline-none"
+						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-pink focus:outline-none"
 					/>
 
 					<input
@@ -102,7 +102,7 @@ function RegisterForm() {
 						onChange={(event) =>
 							setLastName(event.target.value)
 						}
-						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-brand-brown focus:outline-none"
+						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-pink focus:outline-none"
 					/>
 
 					<input
@@ -113,7 +113,7 @@ function RegisterForm() {
 						onChange={(event) =>
 							setEmail(event.target.value)
 						}
-						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-brand-brown focus:outline-none"
+						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-pink focus:outline-none"
 					/>
 
 					<div className="relative">
@@ -125,7 +125,7 @@ function RegisterForm() {
 							onChange={(event) =>
 								setPassword(event.target.value)
 							}
-							className="w-full rounded-lg border border-border px-4 py-3 pr-12 focus:border-2 focus:border-brand-brown focus:outline-none"
+							className="w-full rounded-lg border border-border px-4 py-3 pr-12 focus:border-2 focus:border-pink focus:outline-none"
 						/>
 
 						<button
@@ -161,7 +161,7 @@ function RegisterForm() {
 							onChange={(event) =>
 								setConfirmPassword(event.target.value)
 							}
-							className="w-full rounded-lg border border-border px-4 py-3 pr-12 focus:border-2 focus:border-brand-brown focus:outline-none"
+							className="w-full rounded-lg border border-border px-4 py-3 pr-12 focus:border-2 focus:border-pink focus:outline-none"
 						/>
 
 						<button
@@ -192,7 +192,7 @@ function RegisterForm() {
 						onChange={(event) =>
 							setRoleId(Number(event.target.value))
 						}
-						className="w-full cursor-pointer rounded-lg border border-border bg-white px-4 py-3 text-text-primary focus:border-2 focus:border-brand-brown focus:outline-none"
+						className="w-full cursor-pointer rounded-lg border border-border bg-white px-4 py-3 text-text-primary focus:border-2 focus:border-pink focus:outline-none"
 					>
 						<option value="" disabled>
 							Tipo de empleado
@@ -210,7 +210,7 @@ function RegisterForm() {
 						onChange={(event) =>
 							setAuthorizationCode(event.target.value)
 						}
-						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-brand-brown focus:outline-none"
+						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-pink focus:outline-none"
 					/>
 
 					{error ? (
@@ -222,7 +222,7 @@ function RegisterForm() {
 					<button
 						type="submit"
 						disabled={isSubmitting}
-						className="w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-white disabled:cursor-not-allowed disabled:opacity-70"
+						className="w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-white hover:bg-brand-mint-dark/90 disabled:cursor-not-allowed disabled:opacity-70"
 					>
 						{isSubmitting
 							? "Enviando código..."

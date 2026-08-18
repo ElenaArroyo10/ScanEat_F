@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { login as loginUser } from "../../services/authService";
 
@@ -76,7 +74,7 @@ function LoginForm() {
 						placeholder="Correo electrónico"
 						value={email}
 						onChange={(event) => setEmail(event.target.value)}
-						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-brand-brown focus:outline-none"
+						className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-pink focus:outline-none"
 					/>
 
 					<div className="flex flex-col gap-1">
@@ -87,7 +85,7 @@ function LoginForm() {
 								placeholder="Contraseña"
 								value={password}
 								onChange={(event) => setPassword(event.target.value)}
-								className="w-full rounded-lg border border-border px-4 py-3 pr-12 focus:border-2 focus:border-brand-brown focus:outline-none"
+								className="w-full rounded-lg border border-border px-4 py-3 pr-12 focus:border-2 focus:border-pink focus:outline-none"
 							/>
 
 							<button
@@ -119,7 +117,7 @@ function LoginForm() {
 					<button
 						type="submit"
 						disabled={isSubmitting}
-						className="w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-white disabled:cursor-not-allowed disabled:opacity-70"
+						className="w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-white hover:bg-brand-mint-dark/90 disabled:cursor-not-allowed disabled:opacity-70"
 					>
 						{isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
 					</button>
@@ -129,7 +127,7 @@ function LoginForm() {
 						¿No tienes una cuenta?{" "}
 						<Link
 							to="/register"
-							className="text-brand-mint-dark hover:underline"
+							className="text-brand-mint-dark hover:underline text-base"
 						>
 							Regístrate aquí
 						</Link>

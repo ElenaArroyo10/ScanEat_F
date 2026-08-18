@@ -11,9 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AccountSuccessRouteImport } from './routes/accountSuccess'
 import { Route as AccountVerificationRouteImport } from './routes/accountVerification'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ForgotPasswordRouteImport } from './routes/forgotPassword'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PasswordSuccessRouteImport } from './routes/passwordSuccess'
+import { Route as ProfileSettingsRouteImport } from './routes/profileSettings'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/resetPassword'
 import { Route as UnexpectedIssueRouteImport } from './routes/unexpectedIssue'
@@ -30,6 +32,11 @@ const AccountVerificationRoute = AccountVerificationRouteImport.update({
   path: '/accountVerification',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgotPassword',
   path: '/forgotPassword',
@@ -43,6 +50,11 @@ const LoginRoute = LoginRouteImport.update({
 const PasswordSuccessRoute = PasswordSuccessRouteImport.update({
   id: '/passwordSuccess',
   path: '/passwordSuccess',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileSettingsRoute = ProfileSettingsRouteImport.update({
+  id: '/profileSettings',
+  path: '/profileSettings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -74,9 +86,11 @@ const VerificationCodeRoute = VerificationCodeRouteImport.update({
 export interface FileRoutesByFullPath {
   '/accountSuccess': typeof AccountSuccessRoute
   '/accountVerification': typeof AccountVerificationRoute
+  '/dashboard': typeof DashboardRoute
   '/forgotPassword': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/passwordSuccess': typeof PasswordSuccessRoute
+  '/profileSettings': typeof ProfileSettingsRoute
   '/register': typeof RegisterRoute
   '/resetPassword': typeof ResetPasswordRoute
   '/unexpectedIssue': typeof UnexpectedIssueRoute
@@ -86,9 +100,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/accountSuccess': typeof AccountSuccessRoute
   '/accountVerification': typeof AccountVerificationRoute
+  '/dashboard': typeof DashboardRoute
   '/forgotPassword': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/passwordSuccess': typeof PasswordSuccessRoute
+  '/profileSettings': typeof ProfileSettingsRoute
   '/register': typeof RegisterRoute
   '/resetPassword': typeof ResetPasswordRoute
   '/unexpectedIssue': typeof UnexpectedIssueRoute
@@ -99,9 +115,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/accountSuccess': typeof AccountSuccessRoute
   '/accountVerification': typeof AccountVerificationRoute
+  '/dashboard': typeof DashboardRoute
   '/forgotPassword': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/passwordSuccess': typeof PasswordSuccessRoute
+  '/profileSettings': typeof ProfileSettingsRoute
   '/register': typeof RegisterRoute
   '/resetPassword': typeof ResetPasswordRoute
   '/unexpectedIssue': typeof UnexpectedIssueRoute
@@ -113,9 +131,11 @@ export interface FileRouteTypes {
   fullPaths:
     | '/accountSuccess'
     | '/accountVerification'
+    | '/dashboard'
     | '/forgotPassword'
     | '/login'
     | '/passwordSuccess'
+    | '/profileSettings'
     | '/register'
     | '/resetPassword'
     | '/unexpectedIssue'
@@ -125,9 +145,11 @@ export interface FileRouteTypes {
   to:
     | '/accountSuccess'
     | '/accountVerification'
+    | '/dashboard'
     | '/forgotPassword'
     | '/login'
     | '/passwordSuccess'
+    | '/profileSettings'
     | '/register'
     | '/resetPassword'
     | '/unexpectedIssue'
@@ -137,9 +159,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/accountSuccess'
     | '/accountVerification'
+    | '/dashboard'
     | '/forgotPassword'
     | '/login'
     | '/passwordSuccess'
+    | '/profileSettings'
     | '/register'
     | '/resetPassword'
     | '/unexpectedIssue'
@@ -150,9 +174,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AccountSuccessRoute: typeof AccountSuccessRoute
   AccountVerificationRoute: typeof AccountVerificationRoute
+  DashboardRoute: typeof DashboardRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   PasswordSuccessRoute: typeof PasswordSuccessRoute
+  ProfileSettingsRoute: typeof ProfileSettingsRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   UnexpectedIssueRoute: typeof UnexpectedIssueRoute
@@ -176,6 +202,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountVerificationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/forgotPassword': {
       id: '/forgotPassword'
       path: '/forgotPassword'
@@ -195,6 +228,13 @@ declare module '@tanstack/react-router' {
       path: '/passwordSuccess'
       fullPath: '/passwordSuccess'
       preLoaderRoute: typeof PasswordSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profileSettings': {
+      id: '/profileSettings'
+      path: '/profileSettings'
+      fullPath: '/profileSettings'
+      preLoaderRoute: typeof ProfileSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -238,9 +278,11 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   AccountSuccessRoute: AccountSuccessRoute,
   AccountVerificationRoute: AccountVerificationRoute,
+  DashboardRoute: DashboardRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   PasswordSuccessRoute: PasswordSuccessRoute,
+  ProfileSettingsRoute: ProfileSettingsRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   UnexpectedIssueRoute: UnexpectedIssueRoute,
