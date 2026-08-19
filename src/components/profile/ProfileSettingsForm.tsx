@@ -12,9 +12,9 @@ function ProfileSettingsForm() {
 
 	return (
 		<main className="min-h-screen bg-brand-white">
-			<div className="h-10 bg-brand-mint" />
+			<div className="h-20 bg-brand-mint" />
 
-			<section className="min-h-[calc(100vh-5rem)] rounded-t-[40px] bg-white px-6 py-10">
+			<section className="-mt-10 min-h-[calc(100vh-5rem)] rounded-t-[40px] bg-white px-6 py-10">
 				<form
 					onSubmit={handleSubmit}
 					className="mx-auto flex w-full max-w-sm flex-col"
