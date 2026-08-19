@@ -142,7 +142,7 @@ function VerificationCodeForm() {
 								onKeyDown={(event) =>
 									handleKeyDown(index, event)
 								}
-								className="h-12 w-10 rounded-lg border border-border text-center text-lg font-semibold text-text-primary outline-none focus:border-2 focus:border-pink"
+								className="h-12 w-10 rounded-lg border border-border text-center text-lg font-semibold text-text-primary outline-none focus:border-2 focus:border-brand-brown"
 								aria-label={`Dígito ${index + 1}`}
 							/>
 						))}

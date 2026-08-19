@@ -87,7 +87,7 @@ function ResetPasswordForm() {
 								onChange={(event) =>
 									setPassword(event.target.value)
 								}
-								className="w-full rounded-lg border border-border px-4 py-3 pr-12 focus:border-2 focus:border-pink focus:outline-none"
+								className="w-full rounded-lg border border-border px-4 py-3 pr-12 focus:border-2 focus:border-brand-brown focus:outline-none"
 							/>
 
 							<button
