@@ -11,14 +11,14 @@ function ProfileSettingsForm() {
 }
 
 	return (
-		<main className="min-h-screen bg-brand-mint">
-			<div className="h-20 bg-brand-mint" />
+		<main className="min-h-screen bg-brand-white">
+			<div className="h-10 bg-brand-mint" />
 
 			<section className="min-h-[calc(100vh-5rem)] rounded-t-[40px] bg-white px-6 py-10">
 				<form
 					onSubmit={handleSubmit}
 					className="mx-auto flex w-full max-w-sm flex-col"
-				>
+				> 
 					<h1 className="text-center text-[32px] font-bold text-brand-mint-dark">
 						Profile Settings
 					</h1>
@@ -52,6 +52,15 @@ function ProfileSettingsForm() {
 							id="email"
 							type="email"
 							placeholder="Correo electrónico"
+							className="mt-2 w-full rounded-lg border border-border px-4 py-3 text-text-primary outline-none focus:border-2 focus:border-brand-brown"
+						/>
+                    </div>
+                    
+                    <div className="mt-5">
+						<input
+							id="password"
+							type="password"
+							placeholder="Contraseña"
 							className="mt-2 w-full rounded-lg border border-border px-4 py-3 text-text-primary outline-none focus:border-2 focus:border-brand-brown"
 						/>
 					</div>

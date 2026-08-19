@@ -142,7 +142,7 @@ function AccountVerificationForm() {
 								onKeyDown={(event) =>
 									handleKeyDown(index, event)
 								}
-								className="h-12 w-10 rounded-lg border border-border text-center text-lg font-semibold text-text-primary outline-none focus:border-2 focus:border-pink"
+								className="h-12 w-10 rounded-lg border border-border text-center text-lg font-semibold text-text-primary outline-none focus:border-2 focus:border-brand-brown"
 								aria-label={`Dígito ${index + 1}`}
 							/>
 						))}
@@ -172,7 +172,7 @@ function AccountVerificationForm() {
 						disabled={isResending}
 						className="mt-4 text-sm text-brand-mint-dark disabled:cursor-not-allowed disabled:opacity-70"
 					>
-						{isResending ? "Reenviando..." : "Reenviar código"}
+						{isResending ? "Reenviando..." : "Reenviar código"} 
 					</button>
 
 					<Link

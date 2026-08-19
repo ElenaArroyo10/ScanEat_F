@@ -65,7 +65,7 @@ function ForgotPasswordForm() {
 							placeholder="Correo electrónico"
 							value={email}
 							onChange={(event) => setEmail(event.target.value)}
-							className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-pink focus:outline-none"
+							className="w-full rounded-lg border border-border px-4 py-3 focus:border-2 focus:border-brand-brown focus:outline-none"
 						/>
 
 						{error ? <p className="text-sm text-red-600">{error}</p> : null}
