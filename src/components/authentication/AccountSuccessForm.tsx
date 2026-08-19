@@ -18,10 +18,10 @@ function AccountSuccessForm() {
 					</p>
 
 					<Link
-						to="/login"
+						to="/dashboard"
 						className="mt-8 cursor-pointer text-brand-mint-dark hover:underline font-bold"
 					>
-						Iniciar sesión
+						Siguiente
 					</Link>
 				</div>
 			</section>

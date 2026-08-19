@@ -42,9 +42,7 @@ export const register = async (
 
     return data as {
         message: string;
-        token?: string;
-        user?: Record<string, unknown>;
-        verificationCode?: string;
+        email?: string;
     };
 };
 
