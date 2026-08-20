@@ -84,7 +84,7 @@ function VerificationCodeForm() {
 
 				localStorage.removeItem("pendingLoginEmail");
 				localStorage.removeItem("verificationFlow");
-				navigate({ to: "/accountSuccess" });
+				navigate({ to: "/dashboard" });
 			} catch (err) {
 				const message =
 					err &&

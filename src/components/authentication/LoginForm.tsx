@@ -40,7 +40,7 @@ function LoginForm() {
                 localStorage.setItem("authUser", JSON.stringify(response.user));
             }
 
-            navigate({ to: "/accountSuccess" });
+            navigate({ to: "/verificationCode" });
         } catch (err) {
             const message =
                 err &&

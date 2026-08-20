@@ -18,7 +18,7 @@ function AccountSuccessForm() {
 					</p>
 
 					<Link
-						to="/dashboard"
+						to="/login"
 						className="mt-8 cursor-pointer text-brand-mint-dark hover:underline font-bold"
 					>
 						Siguiente
