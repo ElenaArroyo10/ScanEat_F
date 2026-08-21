@@ -7,7 +7,7 @@ function UnexpectedIssueForm() {
 		<main className="min-h-screen bg-brand-mint flex items-center justify-center px-6">
 			<section className="w-full max-w-sm rounded-[40px] bg-white px-8 py-22">
 				<div className="flex flex-col items-center text-center">
-                    \
+                    
                     <AiOutlineExclamationCircle className="h-20 w-20 text-pink" />
 
 					<h1 className="mt-8 text-2xl font-bold text-pink">

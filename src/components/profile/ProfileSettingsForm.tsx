@@ -83,7 +83,7 @@ function ProfileSettingsForm() {
                     
                     <div className="mt-5">
 						<Link
-							to="/dashboard"
+							to="/changePassword"
 							className="mt-2 block w-full cursor-pointer rounded-lg border border-brand-mint-dark px-4 py-3 text-center text-base font-bold text-brand-mint-dark hover:bg-brand-mint-dark/10"
 						>
 							Cambiar contraseña
