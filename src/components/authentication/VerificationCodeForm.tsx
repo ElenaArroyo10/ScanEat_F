@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { verifyLoginCode } from "../../services/authService";
+import { resendLoginCode, resendResetCode, verifyLoginCode } from "../../services/authService";
 
 function VerificationCodeForm() {
 	const navigate = useNavigate();
@@ -10,6 +10,8 @@ function VerificationCodeForm() {
 	const [error, setError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [verificationFlow, setVerificationFlow] = useState("reset");
+	const [successMessage, setSuccessMessage] = useState("");
+	const [isResending, setIsResending] = useState(false);
 
 	useEffect(() => {
 		const flow = localStorage.getItem("verificationFlow");
@@ -52,6 +54,38 @@ function VerificationCodeForm() {
 			document.getElementById(`code-${index - 1}`)?.focus();
 		}
 	}
+
+	async function handleResendCode() {
+			if (!email) {
+				setError("No se encontró el correo para reenviar el código.");
+				return;
+			}
+	
+			setIsResending(true);
+			setError("");
+			setSuccessMessage("");
+	
+			try {
+				const response =
+    			verificationFlow === "login"
+        		? await resendLoginCode(email)
+        		: await resendResetCode(email);
+				setSuccessMessage(response.message || "Se reenviaron los códigos.");
+				setCode(["", "", "", "", "", ""]);
+			} catch (err) {
+				const message =
+					err &&
+					typeof err === "object" &&
+					"message" in err
+						? String((err as { message?: string }).message)
+						: "No se pudo reenviar el código.";
+	
+				setError(message);
+			} finally {
+				setIsResending(false);
+			}
+		}
+
 
 	async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -158,6 +192,15 @@ function VerificationCodeForm() {
 						className="mt-14 w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-center text-white disabled:cursor-not-allowed disabled:opacity-70"
 					>
 						{isSubmitting ? "Verificando..." : "Verificar"}
+					</button>
+
+					<button
+						type="button"
+						onClick={handleResendCode}
+						disabled={isResending}
+						className="mt-4 text-sm text-brand-mint-dark disabled:cursor-not-allowed disabled:opacity-70"
+					>
+						{isResending ? "Reenviando..." : "Reenviar código"} 
 					</button>
 
 					<Link

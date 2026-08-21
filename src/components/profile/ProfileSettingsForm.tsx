@@ -1,13 +1,32 @@
 import { IoCameraOutline } from "react-icons/io5";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { editProfile } from "../../services/authService";
+import { useState } from "react";
 
 function ProfileSettingsForm() {
 	const navigate = useNavigate();
+	const [error, setError] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
-	event.preventDefault();
+	async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+		event.preventDefault();
+		setError("");
 
-	navigate({ to: "/dashboard" });
+		const formData = new FormData(event.currentTarget);
+		const firstName = formData.get("firstName") as string;
+		const lastName = formData.get("lastName") as string;
+		const email = formData.get("email") as string;
+		setIsSubmitting(true);
+
+		try {
+			await editProfile(firstName, lastName, email);
+			navigate({ to: "/dashboard" });
+		} catch (error) {
+			console.error("Error updating profile:", error);
+			setError("Failed to update profile. Please try again.");
+		} finally {
+			setIsSubmitting(false);
+		}
 }
 
 	return (
@@ -32,7 +51,9 @@ function ProfileSettingsForm() {
 					<div className="mt-10">
 						<input
 							id="firstName"
+							name="firstName"
 							type="text"
+							required
 							placeholder="Nombre"
 							className="mt-2 w-full rounded-lg border border-border px-4 py-3 text-text-primary outline-none focus:border-2 focus:border-brand-brown"
 						/>
@@ -41,7 +62,9 @@ function ProfileSettingsForm() {
 					<div className="mt-5">
 						<input
 							id="lastName"
+							name="lastName"
 							type="text"
+							required
 							placeholder="Apellido"
 							className="mt-2 w-full rounded-lg border border-border px-4 py-3 text-text-primary outline-none focus:border-2 focus:border-brand-brown"
 						/>
@@ -50,22 +73,26 @@ function ProfileSettingsForm() {
 					<div className="mt-5">
 						<input
 							id="email"
+							name="email"
 							type="email"
+							required
 							placeholder="Correo electrónico"
 							className="mt-2 w-full rounded-lg border border-border px-4 py-3 text-text-primary outline-none focus:border-2 focus:border-brand-brown"
 						/>
                     </div>
                     
                     <div className="mt-5">
-						<input
-							id="password"
-							type="password"
-							placeholder="Contraseña"
-							className="mt-2 w-full rounded-lg border border-border px-4 py-3 text-text-primary outline-none focus:border-2 focus:border-brand-brown"
-						/>
+						<Link
+							to="/dashboard"
+							className="mt-2 block w-full cursor-pointer rounded-lg border border-brand-mint-dark px-4 py-3 text-center text-base font-bold text-brand-mint-dark hover:bg-brand-mint-dark/10"
+						>
+							Cambiar contraseña
+						</Link>
 					</div>
 
 					<div>
+						{error && <p className="mt-4 text-center text-sm text-red-600">{error}</p>}
+
 						<Link
 							to="/dashboard"
 							className="mt-16 block w-full cursor-pointer rounded-lg border border-brand-mint-dark px-4 py-3 text-center text-base font-bold text-brand-mint-dark hover:bg-brand-mint-dark/10"
@@ -75,9 +102,10 @@ function ProfileSettingsForm() {
 
 						<button
 							type="submit"
+							disabled={isSubmitting}
 							className="mt-6 w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-base font-bold text-white hover:bg-brand-mint-dark/90"
 						>
-							Guardar cambios
+							{isSubmitting ? "Guardando..." : "Guardar cambios"}
 						</button>
 					</div>
 				</form>
