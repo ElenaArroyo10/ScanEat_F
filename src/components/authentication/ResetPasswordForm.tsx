@@ -31,6 +31,21 @@ function ResetPasswordForm() {
 			return;
 		}
 
+		if (password.length < 8) {
+			setError("La contraseña debe tener al menos 8 caracteres.");
+			return;
+		}
+
+		if (!/\d/.test(password)) {
+			setError("La contraseña debe contener al menos un número.");
+			return;
+		}
+
+		if (!/[!@#$%^&*(),.?":{}|<>_\-\\[\]'/+=;`~]/.test(password)) {
+			setError("La contraseña debe contener al menos un símbolo.");
+			return;
+		}
+
 		if (!email || !code) {
 			setError("No se encontró el correo o código de recuperación.");
 			return;
@@ -40,9 +55,11 @@ function ResetPasswordForm() {
 
 		try {
 			await resetPassword(email, code, password);
+
 			localStorage.removeItem("pendingResetEmail");
 			localStorage.removeItem("pendingResetCode");
 			localStorage.removeItem("verificationFlow");
+
 			navigate({ to: "/passwordSuccess" });
 		} catch (err) {
 			const message =
@@ -65,7 +82,6 @@ function ResetPasswordForm() {
 					onSubmit={handleSubmit}
 					className="mx-auto flex w-full max-w-sm flex-col"
 				>
-					{/* Título y descripción */}
 					<div className="flex flex-col gap-4">
 						<h1 className="text-center font-bold text-brand-mint-dark">
 							Cambiar contraseña
@@ -76,7 +92,6 @@ function ResetPasswordForm() {
 						</p>
 					</div>
 
-					{/* Contraseña y requisitos */}
 					<div className="mt-14 flex flex-col gap-4">
 						<div className="relative">
 							<input
@@ -84,9 +99,10 @@ function ResetPasswordForm() {
 								type={showPassword ? "text" : "password"}
 								placeholder="Nueva contraseña"
 								value={password}
-								onChange={(event) =>
-									setPassword(event.target.value)
-								}
+								onChange={(event) => {
+									setPassword(event.target.value);
+									setError("");
+								}}
 								className="w-full rounded-lg border border-border px-4 py-3 pr-12 focus:border-2 focus:border-brand-brown focus:outline-none"
 							/>
 
@@ -110,10 +126,9 @@ function ResetPasswordForm() {
 							</button>
 						</div>
 
-						{/* Requisitos */}
 						<div className="flex flex-col gap-4">
 							<div className="flex items-center justify-center gap-2">
-								<FaRegCheckCircle className="text-brand-mint-dark"/>
+								<FaRegCheckCircle className="text-brand-mint-dark" />
 
 								<p className="text-text-primary">
 									Tu contraseña debe contener:
@@ -128,7 +143,11 @@ function ResetPasswordForm() {
 						</div>
 					</div>
 
-					{error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
+					{error ? (
+						<p className="mt-4 text-center text-sm text-red-600">
+							{error}
+						</p>
+					) : null}
 
 					<button
 						type="submit"
@@ -138,8 +157,7 @@ function ResetPasswordForm() {
 						{isSubmitting ? "Cambiando..." : "Cambiar contraseña"}
 					</button>
 
-
-                    <Link
+					<Link
 						to="/verificationCode"
 						className="mx-auto mt-14 cursor-pointer text-brand-mint"
 						aria-label="Volver al código de verificación"

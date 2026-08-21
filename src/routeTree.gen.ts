@@ -11,6 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AccountSuccessRouteImport } from './routes/accountSuccess'
 import { Route as AccountVerificationRouteImport } from './routes/accountVerification'
+import { Route as ChangePasswordRouteImport } from './routes/changePassword'
+import { Route as ChangePasswordErrorRouteImport } from './routes/changePasswordError'
+import { Route as ChangePasswordSuccessRouteImport } from './routes/changePasswordSuccess'
+import { Route as ChangePasswordVerificationRouteImport } from './routes/changePasswordVerification'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ForgotPasswordRouteImport } from './routes/forgotPassword'
 import { Route as LoginRouteImport } from './routes/login'
@@ -32,6 +36,27 @@ const AccountVerificationRoute = AccountVerificationRouteImport.update({
   path: '/accountVerification',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChangePasswordRoute = ChangePasswordRouteImport.update({
+  id: '/changePassword',
+  path: '/changePassword',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangePasswordErrorRoute = ChangePasswordErrorRouteImport.update({
+  id: '/changePasswordError',
+  path: '/changePasswordError',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangePasswordSuccessRoute = ChangePasswordSuccessRouteImport.update({
+  id: '/changePasswordSuccess',
+  path: '/changePasswordSuccess',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangePasswordVerificationRoute =
+  ChangePasswordVerificationRouteImport.update({
+    id: '/changePasswordVerification',
+    path: '/changePasswordVerification',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -86,6 +111,10 @@ const VerificationCodeRoute = VerificationCodeRouteImport.update({
 export interface FileRoutesByFullPath {
   '/accountSuccess': typeof AccountSuccessRoute
   '/accountVerification': typeof AccountVerificationRoute
+  '/changePassword': typeof ChangePasswordRoute
+  '/changePasswordError': typeof ChangePasswordErrorRoute
+  '/changePasswordSuccess': typeof ChangePasswordSuccessRoute
+  '/changePasswordVerification': typeof ChangePasswordVerificationRoute
   '/dashboard': typeof DashboardRoute
   '/forgotPassword': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
@@ -100,6 +129,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/accountSuccess': typeof AccountSuccessRoute
   '/accountVerification': typeof AccountVerificationRoute
+  '/changePassword': typeof ChangePasswordRoute
+  '/changePasswordError': typeof ChangePasswordErrorRoute
+  '/changePasswordSuccess': typeof ChangePasswordSuccessRoute
+  '/changePasswordVerification': typeof ChangePasswordVerificationRoute
   '/dashboard': typeof DashboardRoute
   '/forgotPassword': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
@@ -115,6 +148,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/accountSuccess': typeof AccountSuccessRoute
   '/accountVerification': typeof AccountVerificationRoute
+  '/changePassword': typeof ChangePasswordRoute
+  '/changePasswordError': typeof ChangePasswordErrorRoute
+  '/changePasswordSuccess': typeof ChangePasswordSuccessRoute
+  '/changePasswordVerification': typeof ChangePasswordVerificationRoute
   '/dashboard': typeof DashboardRoute
   '/forgotPassword': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
@@ -131,6 +168,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/accountSuccess'
     | '/accountVerification'
+    | '/changePassword'
+    | '/changePasswordError'
+    | '/changePasswordSuccess'
+    | '/changePasswordVerification'
     | '/dashboard'
     | '/forgotPassword'
     | '/login'
@@ -145,6 +186,10 @@ export interface FileRouteTypes {
   to:
     | '/accountSuccess'
     | '/accountVerification'
+    | '/changePassword'
+    | '/changePasswordError'
+    | '/changePasswordSuccess'
+    | '/changePasswordVerification'
     | '/dashboard'
     | '/forgotPassword'
     | '/login'
@@ -159,6 +204,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/accountSuccess'
     | '/accountVerification'
+    | '/changePassword'
+    | '/changePasswordError'
+    | '/changePasswordSuccess'
+    | '/changePasswordVerification'
     | '/dashboard'
     | '/forgotPassword'
     | '/login'
@@ -174,6 +223,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AccountSuccessRoute: typeof AccountSuccessRoute
   AccountVerificationRoute: typeof AccountVerificationRoute
+  ChangePasswordRoute: typeof ChangePasswordRoute
+  ChangePasswordErrorRoute: typeof ChangePasswordErrorRoute
+  ChangePasswordSuccessRoute: typeof ChangePasswordSuccessRoute
+  ChangePasswordVerificationRoute: typeof ChangePasswordVerificationRoute
   DashboardRoute: typeof DashboardRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
@@ -200,6 +253,34 @@ declare module '@tanstack/react-router' {
       path: '/accountVerification'
       fullPath: '/accountVerification'
       preLoaderRoute: typeof AccountVerificationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/changePassword': {
+      id: '/changePassword'
+      path: '/changePassword'
+      fullPath: '/changePassword'
+      preLoaderRoute: typeof ChangePasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/changePasswordError': {
+      id: '/changePasswordError'
+      path: '/changePasswordError'
+      fullPath: '/changePasswordError'
+      preLoaderRoute: typeof ChangePasswordErrorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/changePasswordSuccess': {
+      id: '/changePasswordSuccess'
+      path: '/changePasswordSuccess'
+      fullPath: '/changePasswordSuccess'
+      preLoaderRoute: typeof ChangePasswordSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/changePasswordVerification': {
+      id: '/changePasswordVerification'
+      path: '/changePasswordVerification'
+      fullPath: '/changePasswordVerification'
+      preLoaderRoute: typeof ChangePasswordVerificationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -278,6 +359,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   AccountSuccessRoute: AccountSuccessRoute,
   AccountVerificationRoute: AccountVerificationRoute,
+  ChangePasswordRoute: ChangePasswordRoute,
+  ChangePasswordErrorRoute: ChangePasswordErrorRoute,
+  ChangePasswordSuccessRoute: ChangePasswordSuccessRoute,
+  ChangePasswordVerificationRoute: ChangePasswordVerificationRoute,
   DashboardRoute: DashboardRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
