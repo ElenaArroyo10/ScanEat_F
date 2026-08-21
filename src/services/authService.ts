@@ -131,6 +131,25 @@ export const verifyLoginCode = async (email: string, code: string) => {
     };
 };
 
+//Función para reenviar el código el login code al correo electrónico del usuario
+export const resendLoginCode = async (email: string) => {
+    const response = await fetch(`${AUTH_BASE_URL}/resend-login-code`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw data as ApiError;
+    }
+
+    return data as { message: string; verificationCode?: string };
+};
+
 //Función para iniciar recuperación de contraseña
 export const forgotPassword = async (email: string) => {
     const response = await fetch(`${AUTH_BASE_URL}/forgot-password`, {
@@ -164,6 +183,46 @@ export const resetPassword = async (
         body: JSON.stringify({ email, code, newPassword }),
     });
 
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw data as ApiError;
+    }
+
+    return data as { message: string };
+};
+
+//Función para reenviar el reset code al correo electrónico del usuario
+export const resendResetCode = async (email: string) => {
+    const response = await fetch(`${AUTH_BASE_URL}/resend-reset-code`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw data as ApiError;
+    }
+
+    return data as { message: string; verificationCode?: string };
+};
+
+export const editProfile = async (
+    first_name: string,
+    last_name: string, email: string,) => {
+    const token = localStorage.getItem("authToken");
+    const response = await fetch(`${AUTH_BASE_URL}/edit-profile`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ first_name, last_name, email }),
+    });
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {

@@ -79,6 +79,8 @@ function AccountVerificationForm() {
 		}
 	}
 
+	
+
 	async function handleResendCode() {
 		if (!email) {
 			setError("No se encontró el correo para reenviar el código.");
