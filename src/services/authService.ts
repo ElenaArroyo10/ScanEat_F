@@ -239,7 +239,7 @@ export const changePassword = async (
 ) => {
   const token = localStorage.getItem("authToken");
 
-  const response = await fetch("http://localhost:3000/api/auth/change-password", {
+ const response = await fetch(`${AUTH_BASE_URL}/change-password`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -259,4 +259,26 @@ export const changePassword = async (
   }
 
   return data as { message: string };
+};
+
+
+//Función para verificar el nuevo correo tras un cambio de perfil
+export const verifyProfileEmail = async (code: string) => {
+    const token = localStorage.getItem("authToken");
+    const response = await fetch(`${AUTH_BASE_URL}/verify-profile-email`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ code }),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw data as ApiError;
+    }
+
+    return data as { message: string };
 };

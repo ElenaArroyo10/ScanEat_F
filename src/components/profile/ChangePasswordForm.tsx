@@ -14,6 +14,7 @@ function ChangePasswordForm() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+const [isSubmitting,setIsSubmitting]=useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -53,6 +54,11 @@ function ChangePasswordForm() {
       setError("Las contraseñas no coinciden.");
       return;
     }
+if (newPassword === currentPassword) {
+  setError("La nueva contraseña debe ser diferente a la actual.");
+  return;
+}
+setIsSubmitting(true);
 
     try {
       await changePassword(currentPassword, newPassword, confirmPassword);
@@ -64,6 +70,9 @@ function ChangePasswordForm() {
           : "No se pudo cambiar la contraseña.";
 
       setError(message);
+    }
+    finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -157,7 +166,7 @@ function ChangePasswordForm() {
             type="submit"
             className="mt-12 w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-center text-base font-bold text-white hover:bg-brand-mint-dark/90"
           >
-            Cambiar contraseña
+           {isSubmitting ? "Cambiando..." : "Cambiar contraseña"}
           </button>
 
           <Link
