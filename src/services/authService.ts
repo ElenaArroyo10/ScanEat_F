@@ -8,7 +8,7 @@ type ApiError = {
 };
 
 //Es la url base de la API de autenticación
-const AUTH_BASE_URL = "http://localhost:3000/api/auth";
+const AUTH_BASE_URL = `${import.meta.env.VITE_API_URL}/api/auth`;
 
 //Función para registrar un nuevo usuario
 export const register = async (
