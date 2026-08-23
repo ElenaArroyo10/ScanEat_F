@@ -51,8 +51,7 @@ function DashboardForm() {
 						className="fixed inset-0 z-40 cursor-default bg-transparent"
 					/>
 
-					<div className="fixed right-0 top-0 z-50 flex h-screen w-72 flex-col items-center rounded-l-[30px] bg-brand-mint-dark px-8 pt-28">
-						<FaRegCircleUser className="h-24 w-24 text-brand-mint" />
+					<div className="fixed right-0 top-0 z-50 flex h-screen w-72 flex-col items-center rounded-l-[30px] bg-brand-mint-dark px-8 pt-10 text-white">
 
 						<div className="mt-14 w-48">
 							<Link

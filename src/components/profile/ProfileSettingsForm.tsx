@@ -42,11 +42,6 @@ function ProfileSettingsForm() {
 						Profile Settings
 					</h1>
 
-					<div className="mt-10 flex justify-center">
-						<div className="flex h-24 w-24 items-center justify-center rounded-full bg-brand-mint">
-							<IoCameraOutline className="h-15 w-15 text-white" />
-						</div>
-					</div>
 
 					<div className="mt-10">
 						<input
