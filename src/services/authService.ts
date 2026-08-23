@@ -231,3 +231,32 @@ export const editProfile = async (
 
     return data as { message: string };
 };
+
+export const changePassword = async (
+  currentPassword: string,
+  newPassword: string,
+  confirmPassword: string,
+) => {
+  const token = localStorage.getItem("authToken");
+
+  const response = await fetch("http://localhost:3000/api/auth/change-password", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify({
+      currentPassword,
+      newPassword,
+      confirmPassword,
+    }),
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw data as { message?: string };
+  }
+
+  return data as { message: string };
+};
