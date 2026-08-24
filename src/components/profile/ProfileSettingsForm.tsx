@@ -1,4 +1,3 @@
-import { IoCameraOutline } from "react-icons/io5";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { editProfile,getProfile } from "../../services/authService";
 import { useEffect,useState } from "react";
