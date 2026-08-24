@@ -8,7 +8,7 @@ type ApiError = {
 };
 
 //Es la url base de la API de autenticación
-const AUTH_BASE_URL = "http://localhost:3000/api/auth";
+const AUTH_BASE_URL = `${import.meta.env.VITE_API_URL}/api/auth`;
 
 //Función para registrar un nuevo usuario
 export const register = async (
@@ -211,9 +211,14 @@ export const resendResetCode = async (email: string) => {
     return data as { message: string; verificationCode?: string };
 };
 
-export const editProfile = async (
-    first_name: string,
-    last_name: string, email: string,) => {
+
+//editar perfil 
+export const editProfile = async (changes: {
+    first_name?: string,
+    last_name?: string, 
+    email?: string,
+})  => {
+
     const token = localStorage.getItem("authToken");
     const response = await fetch(`${AUTH_BASE_URL}/edit-profile`, {
         method: "PATCH",
@@ -221,7 +226,7 @@ export const editProfile = async (
             "Content-Type": "application/json",
             ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-        body: JSON.stringify({ first_name, last_name, email }),
+        body: JSON.stringify(changes),
     });
     const data = await response.json().catch(() => ({}));
 
@@ -229,7 +234,17 @@ export const editProfile = async (
         throw data as ApiError;
     }
 
-    return data as { message: string };
+   return data as {
+        message: string;
+        user?: {
+            userId: number;
+            firstName: string;
+            lastName: string;
+            email: string;
+            roleId: number;
+        };
+        requiresEmailVerification?: boolean;
+    };
 };
 
 export const changePassword = async (
@@ -239,7 +254,7 @@ export const changePassword = async (
 ) => {
   const token = localStorage.getItem("authToken");
 
-  const response = await fetch("http://localhost:3000/api/auth/change-password", {
+ const response = await fetch(`${AUTH_BASE_URL}/change-password`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -259,4 +274,54 @@ export const changePassword = async (
   }
 
   return data as { message: string };
+};
+
+
+//Función para verificar el nuevo correo tras un cambio de perfil
+export const verifyProfileEmail = async (code: string) => {
+    const token = localStorage.getItem("authToken");
+    const response = await fetch(`${AUTH_BASE_URL}/verify-profile-email`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ code }),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw data as ApiError;
+    }
+
+    return data as { message: string };
+};
+
+//funcion para obtener la informacion del usuario y mostrarla en fornt
+export const getProfile = async () => {
+  const token = localStorage.getItem("authToken");
+
+  const response = await fetch(`${AUTH_BASE_URL}/profile`, {
+    method: "GET",
+    headers: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw data as ApiError;
+  }
+
+  return data as {
+    user: {
+      userId: number;
+      firstName: string;
+      lastName: string;
+      email: string;
+      roleId: number;
+    };
+  };
 };

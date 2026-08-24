@@ -1,32 +1,79 @@
 import { IoCameraOutline } from "react-icons/io5";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { editProfile } from "../../services/authService";
-import { useState } from "react";
+import { editProfile,getProfile } from "../../services/authService";
+import { useEffect,useState } from "react";
+
 
 function ProfileSettingsForm() {
 	const navigate = useNavigate();
 	const [error, setError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
+const [firstName, setFirstName] = useState("");
+const [lastName, setLastName] = useState("");
+const [email, setEmail] = useState("");
+const [originalFirstName, setOriginalFirstName] = useState("");
+const [originalLastName, setOriginalLastName] = useState("");
+const [originalEmail, setOriginalEmail] = useState("");
+
+useEffect(() => {
+  const loadProfile = async () => {
+    try {
+      const data = await getProfile();
+
+      setFirstName(data.user.firstName);
+      setLastName(data.user.lastName);
+      setEmail(data.user.email);
+	  setOriginalFirstName(data.user.firstName);
+setOriginalLastName(data.user.lastName);
+setOriginalEmail(data.user.email);
+
+    } catch (error) {
+      console.error("Error loading profile:", error);
+      setError("No se pudo cargar la información del perfil.");
+    }
+  };
+
+  loadProfile();
+}, []);
 
 	async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
 		setError("");
-
-		const formData = new FormData(event.currentTarget);
-		const firstName = formData.get("firstName") as string;
-		const lastName = formData.get("lastName") as string;
-		const email = formData.get("email") as string;
 		setIsSubmitting(true);
 
-		try {
-			await editProfile(firstName, lastName, email);
-			navigate({ to: "/dashboard" });
-		} catch (error) {
-			console.error("Error updating profile:", error);
-			setError("Failed to update profile. Please try again.");
-		} finally {
-			setIsSubmitting(false);
-		}
+		 try {
+    const changes: {
+        first_name?: string;
+        last_name?: string;
+        email?: string;
+    } = {};
+
+    if (firstName !== originalFirstName) {
+        changes.first_name = firstName;
+    }
+
+    if (lastName !== originalLastName) {
+        changes.last_name = lastName;
+    }
+
+    if (email !== originalEmail) {
+        changes.email = email;
+    }
+
+    if (Object.keys(changes).length === 0) {
+        setError("No has realizado ningún cambio.");
+        return;
+    }
+
+    await editProfile(changes);
+
+    navigate({ to: "/dashboard" });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    setError("No se pudo actualizar el perfil. Inténtalo de nuevo.");
+  } finally {
+    setIsSubmitting(false);
+  }
 }
 
 	return (
@@ -48,7 +95,8 @@ function ProfileSettingsForm() {
 							id="firstName"
 							name="firstName"
 							type="text"
-							required
+						value={firstName}
+						onChange={(e)=>setFirstName(e.target.value)}
 							placeholder="Nombre"
 							className="mt-2 w-full rounded-lg border border-border px-4 py-3 text-text-primary outline-none focus:border-2 focus:border-brand-brown"
 						/>
@@ -59,7 +107,9 @@ function ProfileSettingsForm() {
 							id="lastName"
 							name="lastName"
 							type="text"
-							required
+							value={lastName}
+							onChange={(e)=>setLastName(e.target.value)}
+							
 							placeholder="Apellido"
 							className="mt-2 w-full rounded-lg border border-border px-4 py-3 text-text-primary outline-none focus:border-2 focus:border-brand-brown"
 						/>
@@ -70,7 +120,9 @@ function ProfileSettingsForm() {
 							id="email"
 							name="email"
 							type="email"
-							required
+							value={email}
+							onChange={(e)=>setEmail(e.target.value)}
+							
 							placeholder="Correo electrónico"
 							className="mt-2 w-full rounded-lg border border-border px-4 py-3 text-text-primary outline-none focus:border-2 focus:border-brand-brown"
 						/>

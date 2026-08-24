@@ -41,19 +41,39 @@ function DashboardForm() {
 			</div>
 
 			{/* Panel de perfil */}
-			{isProfileMenuOpen && (
+			{/* {isProfileMenuOpen && ( */}
 				<>
 					{/* Fondo para cerrar el panel */}
 					<button
 						type="button"
 						aria-label="Cerrar menú"
 						onClick={() => setIsProfileMenuOpen(false)}
-						className="fixed inset-0 z-40 cursor-default bg-transparent"
-					/>
+						className={`profile-overlay ${
+            isProfileMenuOpen ? "profile-overlay--open" : ""
+        }`}
+		/>
 
-					<div className="fixed right-0 top-0 z-50 flex h-screen w-72 flex-col items-center rounded-l-[30px] bg-brand-mint-dark px-8 pt-10 text-white">
+<div
+        className={`profile-menu ${
+            isProfileMenuOpen ? "profile-menu--open" : ""
+        }`}
+    >
+
+	
+	<FaRegCircleUser className="h-24 w-24 text-brand-mint" />	
+				
+				
+
+						{/* // className="fixed inset-0 z-40 cursor-default bg-transparent"
+				
+				 */}
+
+					{/* <div className="fixed right-0 top-0 z-50 flex h-screen w-72 flex-col items-center rounded-l-[30px] bg-brand-mint-dark px-8 pt-28">
+						 */}
 
 						<div className="mt-14 w-48">
+
+
 							<Link
 								to="/profileSettings"
 								className="flex w-full items-center gap-4 py-4 text-left text-white"
@@ -96,7 +116,7 @@ function DashboardForm() {
 						</div>
 					</div>
 				</>
-			)}
+			{/* )} */}
 		</main>
 	);
 }

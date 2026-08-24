@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountSuccessRouteImport } from './routes/accountSuccess'
 import { Route as AccountVerificationRouteImport } from './routes/accountVerification'
 import { Route as ChangePasswordRouteImport } from './routes/changePassword'
@@ -25,6 +26,11 @@ import { Route as UnexpectedIssueRouteImport } from './routes/unexpectedIssue'
 import { Route as UnexpectedIssueVRouteImport } from './routes/unexpectedIssueV'
 import { Route as VerificationCodeRouteImport } from './routes/verificationCode'
 
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountSuccessRoute = AccountSuccessRouteImport.update({
   id: '/accountSuccess',
   path: '/accountSuccess',
@@ -102,6 +108,7 @@ const VerificationCodeRoute = VerificationCodeRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/accountSuccess': typeof AccountSuccessRoute
   '/accountVerification': typeof AccountVerificationRoute
   '/changePassword': typeof ChangePasswordRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/verificationCode': typeof VerificationCodeRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/accountSuccess': typeof AccountSuccessRoute
   '/accountVerification': typeof AccountVerificationRoute
   '/changePassword': typeof ChangePasswordRoute
@@ -137,6 +145,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/accountSuccess': typeof AccountSuccessRoute
   '/accountVerification': typeof AccountVerificationRoute
   '/changePassword': typeof ChangePasswordRoute
@@ -156,6 +165,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/accountSuccess'
     | '/accountVerification'
     | '/changePassword'
@@ -173,6 +183,7 @@ export interface FileRouteTypes {
     | '/verificationCode'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/accountSuccess'
     | '/accountVerification'
     | '/changePassword'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/verificationCode'
   id:
     | '__root__'
+    | '/'
     | '/accountSuccess'
     | '/accountVerification'
     | '/changePassword'
@@ -208,6 +220,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AccountSuccessRoute: typeof AccountSuccessRoute
   AccountVerificationRoute: typeof AccountVerificationRoute
   ChangePasswordRoute: typeof ChangePasswordRoute
@@ -227,6 +240,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accountSuccess': {
       id: '/accountSuccess'
       path: '/accountSuccess'
@@ -336,6 +356,7 @@ declare module '@tanstack/react-router' {
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AccountSuccessRoute: AccountSuccessRoute,
   AccountVerificationRoute: AccountVerificationRoute,
   ChangePasswordRoute: ChangePasswordRoute,
