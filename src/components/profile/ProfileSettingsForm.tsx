@@ -15,6 +15,8 @@ const [originalFirstName, setOriginalFirstName] = useState("");
 const [originalLastName, setOriginalLastName] = useState("");
 const [originalEmail, setOriginalEmail] = useState("");
 
+const [isLoaded, setIsLoaded] = useState(false);
+
 useEffect(() => {
   const loadProfile = async () => {
     try {
@@ -26,6 +28,7 @@ useEffect(() => {
 	  setOriginalFirstName(data.user.firstName);
 setOriginalLastName(data.user.lastName);
 setOriginalEmail(data.user.email);
+setIsLoaded(true);
 
     } catch (error) {
       console.error("Error loading profile:", error);
@@ -68,6 +71,8 @@ setOriginalEmail(data.user.email);
     await editProfile(changes);
 
     navigate({ to: "/dashboard" });
+
+	
   } catch (error) {
     console.error("Error updating profile:", error);
     setError("No se pudo actualizar el perfil. Inténtalo de nuevo.");
@@ -154,7 +159,7 @@ setOriginalEmail(data.user.email);
 
 						<button
 							type="submit"
-							disabled={isSubmitting}
+							disabled={isSubmitting || !isLoaded} 
 							className="mt-6 w-full cursor-pointer rounded-lg bg-brand-mint-dark px-4 py-3 text-base font-bold text-white hover:bg-brand-mint-dark/90"
 						>
 							{isSubmitting ? "Guardando..." : "Guardar cambios"}
