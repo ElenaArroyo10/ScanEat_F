@@ -14,7 +14,7 @@ function DashboardForm() {
 		<main className="min-h-screen bg-white px-6 py-8">
 			<div className="flex justify-start">
 				<img
-					src="/img/logo.png"
+					src="/img/logoS.png"
 					alt="Logo del negocio"
 				/>
 			</div>

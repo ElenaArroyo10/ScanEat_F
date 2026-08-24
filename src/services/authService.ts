@@ -169,6 +169,32 @@ export const forgotPassword = async (email: string) => {
     return data as { message: string };
 };
 
+export const verifyResetCode = async (
+    email: string,
+    code: string
+) => {
+    const response = await fetch(`${AUTH_BASE_URL}/verify-reset-code`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email,
+            code,
+        }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(
+            data.message || "No se pudo verificar el código"
+        );
+    }
+
+    return data;
+};
+
 //Función para resetear la contraseña del usuario
 export const resetPassword = async (
     email: string,

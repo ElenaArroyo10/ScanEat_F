@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { resendLoginCode, resendResetCode, verifyLoginCode } from "../../services/authService";
+import { resendLoginCode, resendResetCode, verifyLoginCode, verifyResetCode } from "../../services/authService";
 
 function VerificationCodeForm() {
 	const navigate = useNavigate();
@@ -87,57 +87,85 @@ function VerificationCodeForm() {
 		}
 
 
-	async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
-		event.preventDefault();
+	async function handleSubmit(
+    event: React.SubmitEvent<HTMLFormElement>
+) {
+    event.preventDefault();
 
-		const verificationCode = code.join("");
+    const verificationCode = code.join("");
 
-		if (verificationCode.length !== 6) {
-			setError("Ingresa los 6 dígitos del código.");
-			return;
-		}
+    if (verificationCode.length !== 6) {
+        setError("Ingresa los 6 dígitos del código.");
+        return;
+    }
 
-		if (verificationFlow === "login") {
-			if (!email) {
-				setError("No se encontró el correo para verificar el inicio de sesión.");
-				return;
-			}
+    if (!email) {
+        setError("No se encontró el correo para verificar el código.");
+        return;
+    }
 
-			setIsSubmitting(true);
+    setIsSubmitting(true);
+    setError("");
 
-			try {
-				const response = await verifyLoginCode(email, verificationCode);
+    try {
+        if (verificationFlow === "login") {
+            const response = await verifyLoginCode(
+                email,
+                verificationCode
+            );
 
-				if (response.token) {
-					localStorage.setItem("authToken", response.token);
-				}
+            if (response.token) {
+                localStorage.setItem(
+                    "authToken",
+                    response.token
+                );
+            }
 
-				if (response.user) {
-					localStorage.setItem("authUser", JSON.stringify(response.user));
-				}
+            if (response.user) {
+                localStorage.setItem(
+                    "authUser",
+                    JSON.stringify(response.user)
+                );
+            }
 
-				localStorage.removeItem("pendingLoginEmail");
-				localStorage.removeItem("verificationFlow");
-				navigate({ to: "/dashboard" });
-			} catch (err) {
-				const message =
-					err &&
-					typeof err === "object" &&
-					"message" in err
-						? String((err as { message?: string }).message)
-						: "No se pudo verificar el código.";
+            localStorage.removeItem("pendingLoginEmail");
+            localStorage.removeItem("verificationFlow");
 
-				setError(message);
-			} finally {
-				setIsSubmitting(false);
-			}
+            navigate({ to: "/dashboard" });
 
-			return;
-		}
+            return;
+        }
 
-		localStorage.setItem("pendingResetCode", verificationCode);
-		navigate({ to: "/resetPassword" });
-	}
+        // Verificar código de recuperación
+        await verifyResetCode(
+            email,
+            verificationCode
+        );
+
+        // Solo se guarda si el backend confirmó que es válido
+        localStorage.setItem(
+            "pendingResetCode",
+            verificationCode
+        );
+
+        navigate({
+            to: "/resetPassword",
+        });
+    } catch (err) {
+        const message =
+            err &&
+            typeof err === "object" &&
+            "message" in err
+                ? String(
+                      (err as { message?: string }).message
+                  )
+                : "No se pudo verificar el código.";
+
+        setError(message);
+    } finally {
+        setIsSubmitting(false);
+    }
+}
 
 	return (
 		<main className="min-h-screen bg-white">

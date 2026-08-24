@@ -1,4 +1,3 @@
-import { IoCameraOutline } from "react-icons/io5";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { editProfile,getProfile } from "../../services/authService";
 import { useEffect,useState } from "react";
@@ -94,11 +93,6 @@ setIsLoaded(true);
 						Profile Settings
 					</h1>
 
-					<div className="mt-10 flex justify-center">
-						<div className="flex h-24 w-24 items-center justify-center rounded-full bg-brand-mint">
-							<IoCameraOutline className="h-15 w-15 text-white" />
-						</div>
-					</div>
 
 					<div className="mt-10">
 						<input
