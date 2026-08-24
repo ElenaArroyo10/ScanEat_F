@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { login as loginUser } from "../../services/authService";
-
+//actualizacion para verificar logs de vercel 
 function LoginForm() {
 	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState(false);
