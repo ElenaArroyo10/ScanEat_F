@@ -8,9 +8,10 @@ function VerificationCodeForm() {
 	const [code, setCode] = useState(["", "", "", "", "", ""]);
 	const [email, setEmail] = useState("");
 	const [error, setError] = useState("");
+	const [successMessage, setSuccessMessage] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [verificationFlow, setVerificationFlow] = useState("reset");
-	const [successMessage, setSuccessMessage] = useState("");
+	
 	const [isResending, setIsResending] = useState(false);
 
 	useEffect(() => {
@@ -213,6 +214,12 @@ function VerificationCodeForm() {
 					{error ? (
 						<p className="mt-4 text-center text-sm text-red-600">{error}</p>
 					) : null}
+
+{successMessage ? (
+    <p className="mt-4 text-center text-sm text-green-600">
+        {successMessage}
+    </p>
+) : null}
 
 					<button
 						type="submit"
